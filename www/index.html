@@ -1,58 +1,146 @@
 <!DOCTYPE html>
-<!--
-    Licensed to the Apache Software Foundation (ASF) under one
-    or more contributor license agreements.  See the NOTICE file
-    distributed with this work for additional information
-    regarding copyright ownership.  The ASF licenses this file
-    to you under the Apache License, Version 2.0 (the
-    "License"); you may not use this file except in compliance
-    with the License.  You may obtain a copy of the License at
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <link rel="manifest" href="/manifest.json">
 
-    http://www.apache.org/licenses/LICENSE-2.0
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="MiApp">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 
-    Unless required by applicable law or agreed to in writing,
-    software distributed under the License is distributed on an
-    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-     KIND, either express or implied.  See the License for the
-    specific language governing permissions and limitations
-    under the License.
--->
-<html>
-    <head>
-        <meta charset="utf-8">
-        <!--
-        Customize this policy to fit your own app's needs. For more guidance, please refer to the docs:
-            https://cordova.apache.org/docs/en/latest/
-        Some notes:
-            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
-            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
-                * Enable inline JS: add 'unsafe-inline' to default-src
-        -->
-        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
-        <meta name="format-detection" content="telephone=no">
-        <meta name="msapplication-tap-highlight" content="no">
-        <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
-        <meta name="color-scheme" content="light dark">
-        <link rel="stylesheet" href="css/index.css">
-        <title>Hello World</title>
-    </head>
-    <body>
-        <div class="app">
-            <h1>Apache Cordova</h1>
-            <div id="deviceready" class="blink">
-                <p class="event listening">Connecting to Device</p>
-                <p class="event received">Device is Ready</p>
-                <p>prueba</p>
-            </div>
-        </div>
-        <script>
-  // Solo carga cordova.js si NO estamos en un navegador (Live Server)
-  if (location.protocol !== "http:" && location.protocol !== "https:") {
-    var cordovaScript = document.createElement("script");
-    cordovaScript.src = "cordova.js";
-    document.head.appendChild(cordovaScript);
-  }
-</script>
-        <script src="js/index.js"></script>
-    </body>
+<link rel="apple-touch-icon" href="img/images.png">
+
+<meta name="theme-color" content="#8c1936">
+  <title>TaxiApp - Inicio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: sans-serif;
+    }
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+  </style>
+</head>
+<body class="bg-yellow-50 min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-white shadow-md flex justify-between items-center px-4 py-3 sticky top-0 z-50">
+    <div class="flex items-center gap-3">
+      <img src="img/images.png" alt="Logo" class="w-10 h-10" />
+      <h1 class="text-xl font-bold text-yellow-600">TaxiApp</h1>
+    </div>
+    <button id="menuBtn" class="text-yellow-600 focus:outline-none">
+      <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+  </header>
+
+  <!-- Overlay -->
+  <div id="overlay" class="fixed inset-0 hidden overlay z-30"></div>
+
+  <!-- Sidebar -->
+  <aside id="sidebar" class="fixed top-0 left-0 w-64 bg-white h-full shadow-lg transform -translate-x-full transition-transform z-40">
+    <div class="p-4 border-b border-gray-200">
+      <h2 class="text-lg font-semibold text-yellow-600">Menú</h2>
+    </div>
+    <nav class="p-4 space-y-4">
+      <a href="servicio.html" class="block text-gray-700 hover:text-yellow-600">Solicitar taxi</a>
+      <a href="perfil.html" class="block text-gray-700 hover:text-yellow-600">Perfil</a>
+      <a href="historial.html" class="block text-gray-700 hover:text-yellow-600">Historial</a>
+      <a href="ayuda.html" class="block text-gray-700 hover:text-yellow-600">Ayuda</a>
+      <a href="logout.html" class="block text-red-600 font-semibold">Cerrar sesión</a>
+    </nav>
+  </aside>
+
+     <!-- Navbar -->
+     <nav class="bg-yellow-100 shadow-inner flex flex-wrap justify-center gap-4 p-4">
+     <a href="#" class="px-4 py-2 rounded-full text-yellow-800 font-semibold border border-yellow-600 hover:bg-yellow-600 hover:text-white transition">Inicio</a>
+     <a href="#" class="px-4 py-2 rounded-full text-yellow-800 font-semibold border border-yellow-600 hover:bg-yellow-600 hover:text-white transition">Conócenos</a>
+     <a href="#" class="px-4 py-2 rounded-full text-yellow-800 font-semibold border border-yellow-600 hover:bg-yellow-600 hover:text-white transition">Nuestros servicios</a>
+     <a href="register.html" class="px-4 py-2 rounded-full text-yellow-800 font-semibold border border-yellow-600 hover:bg-yellow-600 hover:text-white transition">Registrarse</a>
+     <a href="login.html" class="px-4 py-2 rounded-full text-yellow-800 font-semibold border border-yellow-600 hover:bg-yellow-600 hover:text-white transition">Logearse</a>
+     </nav>
+     <h2 id="saludoUsuario" class="text-lg font-semibold text-yellow-700" style="text-align: center;"></h2>
+
+
+
+  <!-- Contenido principal -->
+  <!-- Contenido principal -->
+    <main class="p-4 grid grid-cols-1 sm:grid-cols-2 gap-6">
+    <!-- Cajón 1 -->
+    <div class="bg-white rounded-xl shadow-md p-4 flex flex-col items-center">
+      <img src="img/servicio1.jpg" alt="Servicio 1" class="rounded-lg w-full h-40 object-cover mb-3">
+      <a href="detalle1.html" class="bg-yellow-600 text-white px-4 py-2 rounded hover:bg-yellow-700 transition">Ver más</a>
+    </div>
+
+    <!-- Cajón 2 -->
+    <div class="bg-white rounded-xl shadow-md p-4 flex flex-col items-center">
+      <img src="img/servicio2.jpg" alt="Servicio 2" class="rounded-lg w-full h-40 object-cover mb-3">
+      <a href="detalle2.html" class="bg-yellow-600 text-white px-4 py-2 rounded hover:bg-yellow-700 transition">Ver más</a>
+    </div>
+
+    <!-- Cajón 3 -->
+    <div class="bg-white rounded-xl shadow-md p-4 flex flex-col items-center">
+      <img src="img/servicio3.jpg" alt="Servicio 3" class="rounded-lg w-full h-40 object-cover mb-3">
+      <a href="detalle3.html" class="bg-yellow-600 text-white px-4 py-2 rounded hover:bg-yellow-700 transition">Ver más</a>
+    </div>
+
+    <!-- Cajón 4 -->
+    <div class="bg-white rounded-xl shadow-md p-4 flex flex-col items-center">
+      <img src="img/servicio4.jpg" alt="Servicio 4" class="rounded-lg w-full h-40 object-cover mb-3">
+      <a href="detalle4.html" class="bg-yellow-600 text-white px-4 py-2 rounded hover:bg-yellow-700 transition">Ver más</a>
+    </div>
+
+    <!-- Cajón 5 -->
+    <div class="bg-white rounded-xl shadow-md p-4 flex flex-col items-center">
+      <img src="img/servicio5.jpg" alt="Servicio 5" class="rounded-lg w-full h-40 object-cover mb-3">
+      <a href="detalle5.html" class="bg-yellow-600 text-white px-4 py-2 rounded hover:bg-yellow-700 transition">Ver más</a>
+    </div>
+
+    <!-- Cajón 6 -->
+    <div class="bg-white rounded-xl shadow-md p-4 flex flex-col items-center">
+      <img src="img/servicio6.jpg" alt="Servicio 6" class="rounded-lg w-full h-40 object-cover mb-3">
+      <a href="detalle6.html" class="bg-yellow-600 text-white px-4 py-2 rounded hover:bg-yellow-700 transition">Ver más</a>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white mt-10 border-t border-gray-200 p-4 text-center space-y-3">
+    <div class="flex justify-center gap-4 flex-wrap">
+      <a href="soporte.html" class="text-sm text-yellow-700 font-medium hover:underline">Soporte técnico</a>
+      <a href="desarrollador.html" class="text-sm text-yellow-700 font-medium hover:underline">Contacto con el desarrollador</a>
+    </div>
+    <p class="text-xs text-gray-500">Todos los derechos reservados © 2025 TaxiApp</p>
+  </footer>
+
+  <!-- Script del menú deslizante -->
+  <script>
+   
+    const menuBtn = document.getElementById('menuBtn');
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('overlay');
+
+    menuBtn.addEventListener('click', () => {
+      sidebar.classList.remove('-translate-x-full');
+      overlay.classList.remove('hidden');
+    });
+
+    overlay.addEventListener('click', () => {
+      sidebar.classList.add('-translate-x-full');
+      overlay.classList.add('hidden');
+    });
+     document.addEventListener("DOMContentLoaded", () => {
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    if (currentUser && currentUser.name) {
+      document.getElementById("saludoUsuario").textContent = `Bienvenido, ${currentUser.name}`;
+    } else {
+      document.getElementById("saludoUsuario").textContent = "Bienvenido";
+    }
+  });
+  </script>
+
+</body>
 </html>

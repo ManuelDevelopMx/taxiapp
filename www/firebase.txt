@@ -1,0 +1,21 @@
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyBDMCpLYCiO0eADiBMVLpto2G3BFd-s8WQ",
+  authDomain: "taxiappglobal-91191.firebaseapp.com",
+  projectId: "taxiappglobal-91191",
+  storageBucket: "taxiappglobal-91191.firebasestorage.app",
+  messagingSenderId: "494247517856",
+  appId: "1:494247517856:web:ad63b0c5f25cf0aab473c5",
+  measurementId: "G-702PZ1J90V"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);

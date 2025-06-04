@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cerrar sesión</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-yellow-100 min-h-screen flex items-center justify-center">
+
+  <div class="text-center">
+    <h1 class="text-3xl font-bold text-yellow-800 mb-4">Cerrando sesión...</h1>
+    <p class="text-yellow-700">Gracias por usar la app. Redirigiendo al inicio de sesión.</p>
+  </div>
+
+  <!-- Firebase Logout Script -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+    import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBDMCpLYCiO0eADiBMVLpto2G3BFd-s8WQ",
+      authDomain: "taxiappglobal-91191.firebaseapp.com",
+      projectId: "taxiappglobal-91191",
+      storageBucket: "taxiappglobal-91191.appspot.com",
+      messagingSenderId: "494247517856",
+      appId: "1:494247517856:web:ad63b0c5f25cf0aab473c5",
+      measurementId: "G-702PZ1J90V"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    signOut(auth).then(() => {
+      // Redirige al login después de cerrar sesión
+      setTimeout(() => {
+        window.location.href = "login.html";
+      }, 1500);
+    }).catch((error) => {
+      console.error("Error al cerrar sesión:", error);
+    });
+  </script>
+
+</body>
+</html>

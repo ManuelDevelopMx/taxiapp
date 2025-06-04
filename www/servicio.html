@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Solicitar Taxi - TaxiApp</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    .input {
+      @apply w-full px-4 py-2 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition;
+    }
+    .label {
+      @apply text-sm font-medium text-gray-700;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-yellow-100 to-yellow-300 min-h-screen flex items-center justify-center p-4">
+  <div class="bg-white p-6 rounded-3xl shadow-2xl w-full max-w-md space-y-6">
+    <h2 class="text-2xl font-extrabold text-yellow-700 text-center">Solicitar un Taxi</h2>
+
+    <!-- Datos del usuario -->
+    <div class="flex items-center gap-4">
+      <img id="userPhoto" src="" alt="Foto de perfil" class="w-16 h-16 rounded-full object-cover border-2 border-yellow-500" />
+      <div>
+        <p id="userName" class="font-bold text-gray-800"></p>
+        <p id="userDetails" class="text-sm text-gray-600"></p>
+      </div>
+    </div>
+
+    <!-- Botón compartir ubicación -->
+    <div class="space-y-2">
+      <label class="label">Ubicación actual</label>
+      <button onclick="abrirMaps()" class="w-full bg-yellow-500 text-white font-bold py-2 rounded-xl hover:bg-yellow-600 transition">Abrir Google Maps</button>
+    </div>
+
+    <!-- Dirección escrita -->
+    <div>
+      <label class="label">Dirección escrita</label>
+      <input id="direccionInput" type="text" placeholder="Ej. Calle 5, Col. Centro" class="input" />
+    </div>
+
+    <!-- Enviar solicitud -->
+    <button id="solicitarBtn" class="w-full bg-green-600 text-white font-bold py-3 rounded-xl hover:bg-green-700 transition">Solicitar Taxi</button>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
+
+  <!-- Firebase config -->
+  <script type="module">
+    // 1. Configura Firebase
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+    import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBDMCpLYCiO0eADiBMVLpto2G3BFd-s8WQ",
+  authDomain: "taxiappglobal-91191.firebaseapp.com",
+  projectId: "taxiappglobal-91191",
+  storageBucket: "taxiappglobal-91191.appspot.com",
+  messagingSenderId: "494247517856",
+  appId: "1:494247517856:web:ad63b0c5f25cf0aab473c5",
+  measurementId: "G-702PZ1J90V",
+  databaseURL: "https://taxiappglobal-91191-default-rtdb.firebaseio.com" // <--- este es el importante
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+
+    // 2. Carga datos del usuario
+    document.addEventListener("DOMContentLoaded", () => {
+      const user = JSON.parse(localStorage.getItem("currentUser"));
+      if (user) {
+        document.getElementById("userName").textContent = user.name;
+        document.getElementById("userDetails").textContent = `${user.age} años • ${user.gender} • ${user.phone}`;
+        document.getElementById("userPhoto").src = user.photo || "https://via.placeholder.com/64";
+      }
+    });
+
+    // 3. Abrir ubicación en Maps
+    window.abrirMaps = () => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+          const { latitude, longitude } = position.coords;
+          const mapsUrl = `https://www.google.com/maps?q=${latitude},${longitude}`;
+          localStorage.setItem("ubicacionActual", mapsUrl);
+          window.open(mapsUrl, "_blank");
+        }, () => {
+          alert("No se pudo obtener la ubicación.");
+        });
+      } else {
+        alert("Tu navegador no soporta geolocalización.");
+      }
+    };
+
+    // 4. Enviar solicitud a Firebase
+    document.getElementById("solicitarBtn").addEventListener("click", async () => {
+      const user = JSON.parse(localStorage.getItem("currentUser"));
+      const direccion = document.getElementById("direccionInput").value.trim();
+      const mapsUrl = localStorage.getItem("ubicacionActual");
+
+      if (!user || !direccion || !mapsUrl) {
+        alert("Completa todos los campos y proporciona la ubicación.");
+        return;
+      }
+
+      const solicitud = {
+        nombre: user.name,
+        edad: user.age,
+        sexo: user.gender,
+        telefono: user.phone,
+        foto: user.photo,
+        direccion: direccion,
+        ubicacion: {
+          link: mapsUrl
+        },
+        timestamp: Date.now()
+      };
+
+      try {
+        await push(ref(database, 'solicitudes'), solicitud);
+        alert("¡Solicitud enviada con éxito!");
+        window.location.href = "index.html";
+      } catch (error) {
+        console.error("Error al enviar solicitud:", error);
+        alert("Error al enviar la solicitud.");
+      }
+    });
+  </script>
+</body>
+</html>

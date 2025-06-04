@@ -1,0 +1,31 @@
+<!-- home.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inicio - TaxiApp</title>
+  <link href="css/tailwind.css" rel="stylesheet">
+</head>
+<body class="bg-yellow-100 min-h-screen p-4 flex flex-col items-center">
+  <div class="bg-white rounded-xl shadow-lg p-6 w-full max-w-md mt-10">
+    <h1 class="text-xl font-bold text-yellow-700 mb-4">Bienvenido/a</h1>
+    <div id="userProfile" class="text-center"></div>
+  </div>
+
+  <script>
+    const user = JSON.parse(localStorage.getItem("currentUser"));
+    const container = document.getElementById("userProfile");
+    if (user) {
+      container.innerHTML = `
+        <img src="${user.photo}" alt="Foto" class="w-24 h-24 rounded-full mx-auto mb-2">
+        <h2 class="text-lg font-semibold">${user.name}</h2>
+        <p>${user.address}</p>
+        <p>${user.phone}</p>
+      `;
+    } else {
+      window.location.href = "login.html";
+    }
+  </script>
+</body>
+</html>
